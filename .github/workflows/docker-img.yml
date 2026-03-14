@@ -1,0 +1,32 @@
+name: Publish Uploader Image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  push-to-ghcr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout Uploader Code
+        uses: actions/checkout@v4
+        with:
+          repository: safwanehfaz/TelegramFileUploader
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64
+          tags: ghcr.io/${{ github.actor }}/TelegramFileUploader:latest
