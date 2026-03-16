@@ -61,7 +61,7 @@ jobs:
 
     - name: Upload files to Telegram
       id: upload
-      uses: xz-dev/TelegramFileUploader@v1
+      uses: safwanehfaz/Telese@v1.0.0
       with:
         to-who: 'username_or_chat_id'
         message: 'Here are your files!'
